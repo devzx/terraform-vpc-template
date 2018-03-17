@@ -1,4 +1,4 @@
-# vpc-template
+# terraform-vpc-template
 
 Creates Scenario 2 from the following article [AWS](https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Scenario2.html)
 
