@@ -13,6 +13,28 @@ resource "aws_vpc" "main" {
   }
 }
 
+resource "aws_default_security_group" "default_sg" {
+  vpc_id = "${aws_vpc.main.id}"
+
+  ingress {
+    protocol  = -1
+    self      = true
+    from_port = 0
+    to_port   = 0
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags {
+    Name = "${var.vpc_name} Security Group"
+  }
+}
+
 resource "aws_subnet" "public" {
   vpc_id     = "${aws_vpc.main.id}"
   cidr_block = "${var.public_subnet_cidr}"
@@ -67,7 +89,7 @@ resource "aws_route_table" "public" {
   }
 }
 
-resource "aws_default_route_table" "r" {
+resource "aws_default_route_table" "private" {
   default_route_table_id = "${aws_vpc.main.default_route_table_id}"
 
   route {
